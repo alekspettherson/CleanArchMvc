@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
 using CleanArchMvc.Application.Interfaces;
 using CleanArchMvc.Application.Mappings;
 using CleanArchMvc.Application.Services;
@@ -21,10 +15,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArchMvc.Infra.IoC
 {
-    public static class DependecyInjection
+    public static class DependecyInjectionAPI
     {
         //Método para adicionar as configurações de services 
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureAPI(this IServiceCollection services, IConfiguration configuration)
         {
             //registrando o contexto com o ApplicationDbContext
             //Definindo provedor, definindo a string de conexao
@@ -36,9 +30,6 @@ namespace CleanArchMvc.Infra.IoC
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.ConfigureApplicationCookie(options =>
-                     options.AccessDeniedPath = "/Account/Login");
-
 
             //registrando o serviços de repositorios (para projeto web o sugerido é o AddScoped
             services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -49,16 +40,17 @@ namespace CleanArchMvc.Infra.IoC
             services.AddScoped<ICategoryService, CategoryService>();
 
             services.AddScoped<IAuthenticate, AuthenticateService>();
-            services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
-
 
             //registrando o automapperAddMaps
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
-       
+
+
             //registrando o serviço do mediator
             var myHandlers = AppDomain.CurrentDomain.Load("CleanArchMvc.Application");
 
             services.AddMediatR(myHandlers);
+          //  services.AddMediatR(myHandlers);
+                   
 
             return services;
         }
