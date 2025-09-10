@@ -1,9 +1,11 @@
 ﻿using CleanArchMvc.Domain.Entities;
+using CleanArchMvc.Infra.Data.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchMvc.Infra.Data.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         /* DbContext permiti realizar as seguintes tarefas:
           - Gerenciar conexão com banco
@@ -35,4 +37,3 @@ namespace CleanArchMvc.Infra.Data.Context
 
     }
 }
-  

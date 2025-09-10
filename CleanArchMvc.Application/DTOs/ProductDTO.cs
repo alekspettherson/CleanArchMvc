@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using CleanArchMvc.Domain.Entities;
 
@@ -22,25 +23,27 @@ namespace CleanArchMvc.Application.DTOs
         [Required(ErrorMessage = "The Description is Required!")]
         [MinLength(5)]
         [MaxLength(200)]
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         [Required(ErrorMessage = "The Price is Required!")]
         [Column(TypeName = "decimal(18,2)")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [DataType(DataType.Currency)]
         [DisplayName("Price")]
-        public decimal Price { get; private set; }
+        public decimal Price { get; set; }
 
         [Required(ErrorMessage = "The Stock is Required!")]
         [Range(1,9999)]
-        [DisplayName("Price")]
-        public int Stock { get; private set; }
+        [DisplayName("Stock")]
+        public int Stock { get; set; }
 
         [MaxLength(250)]
         [DisplayName("Image")]
-        public string Image { get; private set; }
+        public string Image { get; set; }
 
         public int CategoryId { get; set; }
+
+        [JsonIgnore]
         public Category Category { get; set; }
     }
 }
